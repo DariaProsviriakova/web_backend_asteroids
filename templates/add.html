@@ -1,0 +1,68 @@
+<main class="form-page" data-service-id="{{id}}" data-video-url="{{videoUrl}}">
+  <header class="page-header">
+    <h1>ЗАЯВКА</h1>
+    <span class="status-chip">{{status}}</span>
+  </header>
+
+  <form class="draft-form">
+    <label class="field-block">
+      <span>Название астероида</span>
+      <input type="text" value="{{designation}}">
+    </label>
+
+    <label class="field-block">
+      <span>Дата расчета</span>
+      <input type="text" value="{{approachDate}}">
+    </label>
+
+    <section class="field-group">
+      <h2>Координаты астероида</h2>
+      <label class="field-block compact-field">
+        <span>Прямое восхождение (α)</span>
+        <input type="text" value="{{rightAscension}}">
+      </label>
+      <label class="field-block compact-field">
+        <span>Склонение (δ)</span>
+        <input type="text" value="{{declination}}">
+      </label>
+    </section>
+
+    <section class="field-group media-fields">
+      <h2>Фото объекта</h2>
+      <label class="upload-box">
+        <img src="{{imageUrl}}" alt="{{designation}}" data-minio-url="{{imageUrl}}">
+        <strong>Добавить фото</strong>
+        <span>{{imageKey}}</span>
+      </label>
+    </section>
+
+    <section class="field-group media-fields">
+      <h2>Видео объекта</h2>
+      <label class="upload-box">
+        <video class="upload-video" poster="{{imageUrl}}" autoplay muted loop playsinline data-minio-url="{{videoUrl}}">
+          <source src="{{videoUrl}}" type="video/mp4">
+        </video>
+        <strong>Добавить видео</strong>
+        <span>{{videoKey}}</span>
+      </label>
+    </section>
+
+    <label class="field-block compact-field">
+      <span>Описание</span>
+      <textarea rows="4">{{description}}</textarea>
+    </label>
+
+    <div class="double-fields">
+      <label class="field-block compact-field">
+        <span>Мин. расстояние</span>
+        <input type="text" value="{{distance}}">
+      </label>
+      <label class="field-block compact-field">
+        <span>Скорость</span>
+        <input type="text" value="{{velocity}}">
+      </label>
+    </div>
+
+    <button class="primary-button" type="button">Добавить</button>
+  </form>
+</main>
