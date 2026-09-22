@@ -1,0 +1,19 @@
+<article class="asteroid-card" data-date-id="{{id}}" data-video-url="{{videoUrl}}">
+  <a class="card-main" href="{{href}}" aria-label="Открыть ленту для {{designation}}">
+    <img src="{{imageUrl}}" alt="{{designation}}" data-minio-url="{{imageUrl}}">
+  </a>
+  <div class="card-body">
+    <a class="card-object" href="{{href}}">{{designation}}</a>
+    <span class="card-date">{{topicDate}}</span>
+    <strong>{{distance}}</strong>
+    <div class="card-row">
+      <span class="card-like" aria-label="Количество лайков">
+        <span class="card-heart">♡</span>
+        <span>{{likes}}</span>
+      </span>
+      <form action="{{deleteUrl}}" method="post">
+        <button class="card-delete" type="submit" aria-label="Удалить {{designation}}">×</button>
+      </form>
+    </div>
+  </div>
+</article>

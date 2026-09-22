@@ -1,0 +1,30 @@
+<main class="feed-page" data-date-id="{{id}}" data-video-url="{{videoUrl}}">
+  <video class="feed-media feed-video" poster="{{imageUrl}}" autoplay muted loop playsinline aria-label="Видео астероида">
+    <source src="{{videoUrl}}" type="video/mp4">
+  </video>
+  <div class="feed-shade"></div>
+
+  <section class="feed-content">
+    <p class="feed-designation">{{designation}}</p>
+    <h1>{{title}}</h1>
+    <details class="feed-description">
+      <summary><span>{{description}}</span></summary>
+    </details>
+  </section>
+
+  <aside class="feed-side" aria-label="Дата и расстояние сближения">
+    <div class="feed-params">
+      <span>Дата</span>
+      <strong>{{approachDate}}</strong>
+      <span>Расстояние</span>
+      <strong>{{distance}}</strong>
+    </div>
+    <div class="like-stack" id="like-{{id}}" aria-label="Количество лайков">
+      <span class="heart-icon">♡</span>
+      <span class="like-count">{{likes}}</span>
+    </div>
+    <a class="next-icon-button" href="{{nextUrl}}" aria-label="Следующая дата">
+      <span>→</span>
+    </a>
+  </aside>
+</main>

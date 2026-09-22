@@ -1,0 +1,19 @@
+<main class="cards-page">
+  <header class="cards-header">
+    <h1>ВЫБОР ДАТЫ</h1>
+  </header>
+
+  <form class="filter-form range-filter-form" action="/dates" method="get">
+    <label>
+      <span>Фильтр по месяцу: до {{selectedMonthLabel}}</span>
+      <input name="maxMonth" type="range" min="{{minMonth}}" max="{{maxMonth}}" step="1" value="{{selectedMonth}}" list="monthMarks">
+      <datalist id="monthMarks">{{monthMarks}}</datalist>
+      <div class="range-labels">{{monthLabels}}</div>
+    </label>
+    <button class="filter-button" type="submit">Показать</button>
+  </form>
+
+  <section class="cards-grid" aria-label="Список дат">
+    {{cards}}
+  </section>
+</main>

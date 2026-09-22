@@ -1,5 +1,3 @@
-import type { AsteroidService } from "../model/services.js";
-
 export const escapeHtml = (value: unknown) =>
   String(value)
     .replaceAll("&", "&amp;")
@@ -8,19 +6,44 @@ export const escapeHtml = (value: unknown) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
-export const formatDistance = (distanceAu: number) =>
-  `${distanceAu.toLocaleString("ru-RU", {
+export const formatDistance = (distanceAu?: number | null) =>
+  `${(distanceAu ?? 0).toLocaleString("ru-RU", {
     minimumFractionDigits: 3,
     maximumFractionDigits: 3
   })} а.е.`;
 
-export const formatVelocity = (velocityKms: number) =>
-  `${velocityKms.toLocaleString("ru-RU", {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1
-  })} км/с`;
+const monthNames = [
+  "января",
+  "февраля",
+  "марта",
+  "апреля",
+  "мая",
+  "июня",
+  "июля",
+  "августа",
+  "сентября",
+  "октября",
+  "ноября",
+  "декабря"
+];
 
-export const likeCount = (service: AsteroidService) => service.likes.length;
+export const formatMonthRu = (month?: number | null) =>
+  month && month >= 1 && month <= 12 ? monthNames[month - 1] : "";
 
-export const normalizeSearch = (value: string) =>
-  value.trim().toLowerCase().replaceAll("ё", "е");
+export const formatTopicDate = (
+  month?: number | null,
+  day?: number | null,
+  year = 2026
+) => {
+  const monthName = formatMonthRu(month);
+
+  return monthName && day ? `${day} ${monthName} ${year}` : "";
+};
+
+export const parseIntegerInRange = (value: string | undefined, min: number, max: number) => {
+  const numberValue = Number(value?.trim());
+
+  return Number.isInteger(numberValue) && numberValue >= min && numberValue <= max
+    ? numberValue
+    : undefined;
+};

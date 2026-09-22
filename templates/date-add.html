@@ -1,0 +1,73 @@
+<main class="form-page {{modeClass}}" data-date-id="{{id}}" data-video-url="{{videoUrl}}">
+  <header class="page-header">
+    <h1>ДОБАВЛЕНИЕ</h1>
+  </header>
+
+  <form class="draft-form create-draft-form" action="/dates/add" method="post" {{createHidden}}>
+    <section class="field-group media-fields">
+      <h2>Фото объекта</h2>
+      <label class="upload-box">
+        <img src="{{imageUrl}}" alt="Фото астероида" data-default-media="true">
+        <strong>Выбрать фото</strong>
+        <input class="file-control" type="file" accept="image/*">
+      </label>
+    </section>
+
+    <section class="field-group media-fields">
+      <h2>Видео объекта</h2>
+      <label class="upload-box">
+        <video class="upload-video" poster="{{imageUrl}}" autoplay muted loop playsinline data-default-media="true">
+          <source src="{{videoUrl}}" type="video/mp4">
+        </video>
+        <strong>Выбрать видео</strong>
+        <input class="file-control" type="file" accept="video/*">
+      </label>
+    </section>
+
+    <label class="field-block">
+      <span>Название астероида</span>
+      <input name="designation" type="text" value="{{designation}}" placeholder="Например: 2026 KJ" required>
+    </label>
+
+    <button class="primary-button" type="submit">Далее</button>
+  </form>
+
+  <form class="draft-form publish-draft-form" action="/dates/publish" method="post" {{publishHidden}}>
+    <section class="field-group media-fields">
+      <h2>Фото объекта</h2>
+      <div class="upload-box readonly-media">
+        <img src="{{imageUrl}}" alt="{{designation}}" data-minio-url="{{imageUrl}}">
+      </div>
+    </section>
+
+    <section class="field-group media-fields">
+      <h2>Видео объекта</h2>
+      <div class="upload-box readonly-media">
+        <video class="upload-video" poster="{{imageUrl}}" autoplay muted loop playsinline data-minio-url="{{videoUrl}}">
+          <source src="{{videoUrl}}" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <p class="draft-name">{{designation}}</p>
+
+    <label class="field-block compact-field">
+      <span>Описание</span>
+      <textarea name="shortDescription" rows="4" required>{{description}}</textarea>
+    </label>
+
+    <div class="topic-fields">
+      <label class="field-block">
+        <span>Месяц сближения</span>
+        <input name="approachMonth" type="number" min="1" max="12" step="1" value="{{approachMonth}}" placeholder="5" required>
+      </label>
+
+      <label class="field-block">
+        <span>День сближения</span>
+        <input name="approachDay" type="number" min="1" max="31" step="1" value="{{approachDay}}" placeholder="12" required>
+      </label>
+    </div>
+
+    <button class="primary-button" type="submit">Опубликовать</button>
+  </form>
+</main>
