@@ -1,0 +1,142 @@
+Cisco IOS commands for Lab 1
+Replace X, Y, A, B, K before entering commands:
+X - group number, Y - variant number, A - number of PCs in segment 1,
+B - number of PCs in segment 2, K - allowed number of MAC addresses from
+segment 1 on the trunk, with K < A for the Port-Security test.
+
+Example IP plan:
+Network: 196.X.Y.0/24
+SW1 management VLAN 10: 196.X.Y.2
+SW2 management VLAN 10: 196.X.Y.3
+PC_Ai: 196.X.Y.(10+i), mask 255.255.255.0
+PC_Bj: 196.X.Y.(100+j), mask 255.255.255.0
+Gateway: leave blank, because all hosts are in one subnet and no router is used.
+
+SW1
+---
+enable
+configure terminal
+hostname SW1
+no ip domain-lookup
+enable secret class
+service password-encryption
+
+vlan 10
+ name USERS
+exit
+vlan 99
+ name NATIVE_UNUSED
+exit
+
+interface range fa0/1 - <A>
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ no shutdown
+exit
+
+interface fa0/24
+ description TRUNK_TO_SW2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ switchport trunk native vlan 99
+ no shutdown
+exit
+
+interface vlan 10
+ ip address 196.X.Y.2 255.255.255.0
+ no shutdown
+exit
+
+line console 0
+ password console123
+ login
+ logging synchronous
+exit
+
+line vty 0 4
+ password telnet123
+ login
+ transport input telnet
+exit
+
+end
+copy running-config startup-config
+
+
+SW2
+---
+enable
+configure terminal
+hostname SW2
+no ip domain-lookup
+enable secret class
+service password-encryption
+
+vlan 10
+ name USERS
+exit
+vlan 99
+ name NATIVE_UNUSED
+exit
+
+interface range fa0/1 - <B>
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ no shutdown
+exit
+
+interface fa0/24
+ description TRUNK_TO_SW1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ switchport trunk native vlan 99
+ switchport port-security
+ switchport port-security maximum <K>
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ no shutdown
+exit
+
+interface vlan 10
+ ip address 196.X.Y.3 255.255.255.0
+ no shutdown
+exit
+
+line console 0
+ password console123
+ login
+ logging synchronous
+exit
+
+line vty 0 4
+ password telnet123
+ login
+ transport input telnet
+exit
+
+end
+copy running-config startup-config
+
+
+Verification commands
+---------------------
+show vlan brief
+show interfaces trunk
+show port-security interface fa0/24
+show port-security address
+show mac address-table
+ping 196.X.Y.101
+telnet 196.X.Y.2
+
+If Packet Tracer rejects Port-Security on a trunk port, keep the trunk settings
+and demonstrate the same logic on the access port of the limited segment:
+
+interface fa0/1
+ switchport mode access
+ switchport access vlan 10
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1540" height="1050" viewBox="0 0 1540 1050" role="img" aria-labelledby="title desc">
+  <title id="title">ER diagram for asteroid dates</title>
+  <desc id="desc">PostgreSQL schema for observers, asteroid dates and observer date likes.</desc>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #111; }
+    .table { fill: #fff; stroke: #444; stroke-width: 2; }
+    .header { fill: #f7f7f7; stroke: #444; stroke-width: 2; }
+    .rule { stroke: #777; stroke-width: 1.25; }
+    .relation { fill: none; stroke: #555; stroke-width: 2; }
+    .name { font-size: 22px; font-weight: 700; }
+    .flag { font-size: 15px; font-weight: 700; }
+    .column { font-size: 17px; }
+    .type { font-size: 16px; }
+    .note { font-size: 13px; fill: #444; }
+    .legend { font-size: 14px; fill: #444; }
+  </style>
+
+  <rect width="1540" height="1050" fill="#fff"/>
+
+  <!-- Relationships are behind the tables. -->
+  <path class="relation" d="M510 180 H720"/>
+  <path class="relation" d="M280 280 V748 H420"/>
+  <path class="relation" d="M1090 694 V748 H910"/>
+
+  <!-- observers -->
+  <g id="observers">
+    <rect class="table" x="50" y="80" width="460" height="200"/>
+    <rect class="header" x="50" y="80" width="460" height="42"/>
+    <text class="name" x="280" y="108" text-anchor="middle">observers</text>
+    <line class="rule" x1="50" y1="122" x2="510" y2="122"/>
+    <line class="rule" x1="98" y1="122" x2="98" y2="280"/>
+    <line class="rule" x1="335" y1="122" x2="335" y2="280"/>
+    <line class="rule" x1="50" y1="175" x2="510" y2="175"/>
+    <line class="rule" x1="50" y1="228" x2="510" y2="228"/>
+    <text class="flag" x="74" y="154" text-anchor="middle">PK</text>
+    <text class="flag" x="74" y="207" text-anchor="middle">U</text>
+    <text class="flag" x="74" y="260" text-anchor="middle"> </text>
+    <text class="column" x="110" y="154">id</text>
+    <text class="column" x="110" y="207">full_name</text>
+    <text class="column" x="110" y="260">email</text>
+    <text class="type" x="350" y="154">INTEGER</text>
+    <text class="type" x="350" y="207">VARCHAR(80)</text>
+    <text class="type" x="350" y="260">VARCHAR(120)</text>
+  </g>
+
+  <!-- asteroid_dates -->
+  <g id="asteroid_dates">
+    <rect class="table" x="720" y="50" width="760" height="645"/>
+    <rect class="header" x="720" y="50" width="760" height="42"/>
+    <text class="name" x="1100" y="78" text-anchor="middle">asteroid_dates</text>
+    <line class="rule" x1="720" y1="92" x2="1480" y2="92"/>
+    <line class="rule" x1="775" y1="92" x2="775" y2="695"/>
+    <line class="rule" x1="1195" y1="92" x2="1195" y2="695"/>
+    <line class="rule" x1="720" y1="142" x2="1480" y2="142"/>
+    <line class="rule" x1="720" y1="192" x2="1480" y2="192"/>
+    <line class="rule" x1="720" y1="242" x2="1480" y2="242"/>
+    <line class="rule" x1="720" y1="292" x2="1480" y2="292"/>
+    <line class="rule" x1="720" y1="342" x2="1480" y2="342"/>
+    <line class="rule" x1="720" y1="392" x2="1480" y2="392"/>
+    <line class="rule" x1="720" y1="442" x2="1480" y2="442"/>
+    <line class="rule" x1="720" y1="492" x2="1480" y2="492"/>
+    <line class="rule" x1="720" y1="542" x2="1480" y2="542"/>
+    <line class="rule" x1="720" y1="592" x2="1480" y2="592"/>
+    <line class="rule" x1="720" y1="642" x2="1480" y2="642"/>
+
+    <text class="flag" x="748" y="124" text-anchor="middle">PK</text>
+    <text class="flag" x="748" y="174" text-anchor="middle"> </text>
+    <text class="flag" x="748" y="224" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="274" text-anchor="middle"> </text>
+    <text class="flag" x="748" y="324" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="374" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="424" text-anchor="middle"> </text>
+    <text class="flag" x="748" y="474" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="524" text-anchor="middle">FK</text>
+    <text class="flag" x="748" y="574" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="624" text-anchor="middle">N</text>
+    <text class="flag" x="748" y="674" text-anchor="middle">N</text>
+
+    <text class="column" x="790" y="124">id</text>
+    <text class="column" x="790" y="174">designation</text>
+    <text class="column" x="790" y="224">short_description</text>
+    <text class="column" x="790" y="274">status</text>
+    <text class="column" x="790" y="324">image_url</text>
+    <text class="column" x="790" y="374">video_url</text>
+    <text class="column" x="790" y="424">created_at</text>
+    <text class="column" x="790" y="474">formed_at</text>
+    <text class="column" x="790" y="524">creator_id</text>
+    <text class="column" x="790" y="574">approach_month</text>
+    <text class="column" x="790" y="624">approach_day</text>
+    <text class="column" x="790" y="674">minimum_distance_au</text>
+
+    <text class="type" x="1215" y="124">INTEGER</text>
+    <text class="type" x="1215" y="174">VARCHAR(120)</text>
+    <text class="type" x="1215" y="224">VARCHAR(700)</text>
+    <text class="type" x="1215" y="274">VARCHAR(16)</text>
+    <text class="type" x="1215" y="324">VARCHAR(500)</text>
+    <text class="type" x="1215" y="374">VARCHAR(500)</text>
+    <text class="type" x="1215" y="424">TIMESTAMP</text>
+    <text class="type" x="1215" y="474">TIMESTAMP</text>
+    <text class="type" x="1215" y="524">INTEGER</text>
+    <text class="type" x="1215" y="574">SMALLINT</text>
+    <text class="type" x="1215" y="624">SMALLINT</text>
+    <text class="type" x="1215" y="674">NUMERIC(8,5)</text>
+  </g>
+
+  <text class="note" x="1180" y="716">CHECK: status = draft | published | deleted</text>
+
+  <!-- observer_date_likes -->
+  <g id="observer_date_likes">
+    <rect class="table" x="260" y="748" width="650" height="230"/>
+    <rect class="header" x="260" y="748" width="650" height="42"/>
+    <text class="name" x="585" y="776" text-anchor="middle">observer_date_likes</text>
+    <line class="rule" x1="260" y1="790" x2="910" y2="790"/>
+    <line class="rule" x1="310" y1="790" x2="640" y2="790"/>
+    <line class="rule" x1="640" y1="790" x2="640" y2="978"/>
+    <line class="rule" x1="260" y1="838" x2="910" y2="838"/>
+    <line class="rule" x1="260" y1="886" x2="910" y2="886"/>
+    <line class="rule" x1="260" y1="934" x2="910" y2="934"/>
+    <text class="flag" x="285" y="822" text-anchor="middle">PK</text>
+    <text class="flag" x="285" y="870" text-anchor="middle">FK</text>
+    <text class="flag" x="285" y="910" text-anchor="middle">FK</text>
+    <text class="column" x="325" y="822">id</text>
+    <text class="column" x="325" y="870">observer_id</text>
+    <text class="column" x="325" y="910">asteroid_date_id</text>
+    <text class="type" x="660" y="822">INTEGER</text>
+    <text class="type" x="660" y="870">INTEGER</text>
+    <text class="type" x="660" y="910">INTEGER</text>
+    <text class="note" x="325" y="962">UNIQUE (observer_id, asteroid_date_id)</text>
+  </g>
+
+  <!-- One-to-many markers, matching the reference notation. -->
+  <g class="relation">
+    <line x1="510" y1="174" x2="510" y2="186"/>
+    <line x1="516" y1="174" x2="516" y2="186"/>
+    <path d="M720 170 l-15 -10 M720 170 l-15 10 M720 170 h-15"/>
+
+    <line x1="274" y1="280" x2="286" y2="280"/>
+    <line x1="280" y1="286" x2="280" y2="274"/>
+    <path d="M420 748 l-10 -14 M420 748 l10 -14 M420 748 v-14"/>
+
+    <line x1="1084" y1="695" x2="1096" y2="695"/>
+    <line x1="1090" y1="689" x2="1090" y2="701"/>
+    <path d="M910 748 l-10 -14 M910 748 l10 -14 M910 748 v-14"/>
+  </g>
+
+  <text class="legend" x="50" y="1010">PK primary key   FK foreign key   U unique   N nullable</text>
+</svg>

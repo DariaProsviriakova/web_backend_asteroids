@@ -1,0 +1,1023 @@
+{
+  "_type": "Project",
+  "_id": "project-001",
+  "name": "Asteroid Approach Database",
+  "ownedElements": [
+    {
+      "_type": "ERDDataModel",
+      "_id": "model-002",
+      "_parent": {
+        "$ref": "project-001"
+      },
+      "name": "Asteroid Approach Data Model",
+      "ownedElements": [
+        {
+          "_type": "ERDDiagram",
+          "_id": "diagram-003",
+          "_parent": {
+            "$ref": "model-002"
+          },
+          "name": "Asteroid dates ER Diagram",
+          "defaultDiagram": true,
+          "ownedViews": [
+            {
+              "_type": "ERDEntityView",
+              "_id": "entity-view-034",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "entity-004"
+              },
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "label-035",
+                  "_parent": {
+                    "$ref": "entity-view-034"
+                  },
+                  "font": "Arial;13;1",
+                  "left": 49,
+                  "top": 61,
+                  "width": 250,
+                  "height": 16,
+                  "text": "observers"
+                },
+                {
+                  "_type": "ERDColumnCompartmentView",
+                  "_id": "compartment-036",
+                  "_parent": {
+                    "$ref": "entity-view-034"
+                  },
+                  "model": {
+                    "$ref": "entity-004"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 46,
+                  "top": 84,
+                  "width": 256,
+                  "height": 59,
+                  "subViews": [
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-037",
+                      "_parent": {
+                        "$ref": "compartment-036"
+                      },
+                      "model": {
+                        "$ref": "column-005"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 51,
+                      "top": 84,
+                      "width": 246,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-038",
+                      "_parent": {
+                        "$ref": "compartment-036"
+                      },
+                      "model": {
+                        "$ref": "column-006"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 51,
+                      "top": 101,
+                      "width": 246,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-039",
+                      "_parent": {
+                        "$ref": "compartment-036"
+                      },
+                      "model": {
+                        "$ref": "column-007"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 51,
+                      "top": 118,
+                      "width": 246,
+                      "height": 17
+                    }
+                  ]
+                }
+              ],
+              "font": "Arial;12;0",
+              "left": 44,
+              "top": 56,
+              "width": 260,
+              "height": 87,
+              "nameLabel": {
+                "$ref": "label-035"
+              },
+              "columnCompartment": {
+                "$ref": "compartment-036"
+              }
+            },
+            {
+              "_type": "ERDEntityView",
+              "_id": "entity-view-040",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "entity-008"
+              },
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "label-041",
+                  "_parent": {
+                    "$ref": "entity-view-040"
+                  },
+                  "font": "Arial;13;1",
+                  "left": 415,
+                  "top": 61,
+                  "width": 500,
+                  "height": 16,
+                  "text": "asteroid_dates"
+                },
+                {
+                  "_type": "ERDColumnCompartmentView",
+                  "_id": "compartment-042",
+                  "_parent": {
+                    "$ref": "entity-view-040"
+                  },
+                  "model": {
+                    "$ref": "entity-008"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 412,
+                  "top": 84,
+                  "width": 506,
+                  "height": 212,
+                  "subViews": [
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-043",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-009"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 84,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-044",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-010"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 101,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-045",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-011"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 118,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-046",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-012"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 135,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-047",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-013"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 152,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-048",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-014"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 169,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-049",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-015"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 186,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-050",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-016"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 203,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-051",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-017"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 220,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-052",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-018"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 237,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-053",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-019"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 254,
+                      "width": 496,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-054",
+                      "_parent": {
+                        "$ref": "compartment-042"
+                      },
+                      "model": {
+                        "$ref": "column-020"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 417,
+                      "top": 271,
+                      "width": 496,
+                      "height": 17
+                    }
+                  ]
+                }
+              ],
+              "font": "Arial;12;0",
+              "left": 410,
+              "top": 56,
+              "width": 510,
+              "height": 240,
+              "nameLabel": {
+                "$ref": "label-041"
+              },
+              "columnCompartment": {
+                "$ref": "compartment-042"
+              }
+            },
+            {
+              "_type": "ERDEntityView",
+              "_id": "entity-view-055",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "entity-021"
+              },
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "label-056",
+                  "_parent": {
+                    "$ref": "entity-view-055"
+                  },
+                  "font": "Arial;13;1",
+                  "left": 257,
+                  "top": 505,
+                  "width": 320,
+                  "height": 16,
+                  "text": "observer_date_likes"
+                },
+                {
+                  "_type": "ERDColumnCompartmentView",
+                  "_id": "compartment-057",
+                  "_parent": {
+                    "$ref": "entity-view-055"
+                  },
+                  "model": {
+                    "$ref": "entity-021"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 254,
+                  "top": 528,
+                  "width": 326,
+                  "height": 59,
+                  "subViews": [
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-058",
+                      "_parent": {
+                        "$ref": "compartment-057"
+                      },
+                      "model": {
+                        "$ref": "column-022"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 259,
+                      "top": 528,
+                      "width": 316,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-059",
+                      "_parent": {
+                        "$ref": "compartment-057"
+                      },
+                      "model": {
+                        "$ref": "column-023"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 259,
+                      "top": 545,
+                      "width": 316,
+                      "height": 17
+                    },
+                    {
+                      "_type": "ERDColumnView",
+                      "_id": "column-view-060",
+                      "_parent": {
+                        "$ref": "compartment-057"
+                      },
+                      "model": {
+                        "$ref": "column-024"
+                      },
+                      "font": "Arial;12;0",
+                      "left": 259,
+                      "top": 562,
+                      "width": 316,
+                      "height": 17
+                    }
+                  ]
+                }
+              ],
+              "font": "Arial;12;0",
+              "left": 252,
+              "top": 500,
+              "width": 330,
+              "height": 87,
+              "nameLabel": {
+                "$ref": "label-056"
+              },
+              "columnCompartment": {
+                "$ref": "compartment-057"
+              }
+            },
+            {
+              "_type": "ERDRelationshipView",
+              "_id": "relationship-view-061",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "relationship-025"
+              },
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "edge-name-062",
+                  "_parent": {
+                    "$ref": "relationship-view-061"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 330,
+                  "top": 132,
+                  "width": 49,
+                  "height": 14,
+                  "alpha": 0,
+                  "distance": 24,
+                  "hostEdge": {
+                    "$ref": "relationship-view-061"
+                  },
+                  "edgePosition": 1,
+                  "text": "creates"
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "tail-name-063",
+                  "_parent": {
+                    "$ref": "relationship-view-061"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 330,
+                  "top": 148,
+                  "height": 14,
+                  "alpha": 0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-061"
+                  },
+                  "edgePosition": 2
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "head-name-064",
+                  "_parent": {
+                    "$ref": "relationship-view-061"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 330,
+                  "top": 116,
+                  "height": 14,
+                  "alpha": -0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-061"
+                  }
+                }
+              ],
+              "font": "Arial;12;0",
+              "head": {
+                "$ref": "entity-view-040"
+              },
+              "tail": {
+                "$ref": "entity-view-034"
+              },
+              "lineStyle": 2,
+              "points": "304:150;410:150",
+              "nameLabel": {
+                "$ref": "edge-name-062"
+              },
+              "tailNameLabel": {
+                "$ref": "tail-name-063"
+              },
+              "headNameLabel": {
+                "$ref": "head-name-064"
+              }
+            },
+            {
+              "_type": "ERDRelationshipView",
+              "_id": "relationship-view-065",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "relationship-028"
+              },
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "edge-name-066",
+                  "_parent": {
+                    "$ref": "relationship-view-065"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 150,
+                  "top": 345,
+                  "width": 42,
+                  "height": 14,
+                  "alpha": 0,
+                  "distance": 24,
+                  "hostEdge": {
+                    "$ref": "relationship-view-065"
+                  },
+                  "edgePosition": 1,
+                  "text": "adds"
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "tail-name-067",
+                  "_parent": {
+                    "$ref": "relationship-view-065"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 150,
+                  "top": 361,
+                  "height": 14,
+                  "alpha": 0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-065"
+                  },
+                  "edgePosition": 2
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "head-name-068",
+                  "_parent": {
+                    "$ref": "relationship-view-065"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 150,
+                  "top": 329,
+                  "height": 14,
+                  "alpha": -0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-065"
+                  }
+                }
+              ],
+              "font": "Arial;12;0",
+              "head": {
+                "$ref": "entity-view-055"
+              },
+              "tail": {
+                "$ref": "entity-view-034"
+              },
+              "lineStyle": 2,
+              "points": "174:206;174:500;252:500",
+              "nameLabel": {
+                "$ref": "edge-name-066"
+              },
+              "tailNameLabel": {
+                "$ref": "tail-name-067"
+              },
+              "headNameLabel": {
+                "$ref": "head-name-068"
+              }
+            },
+            {
+              "_type": "ERDRelationshipView",
+              "_id": "relationship-view-069",
+              "_parent": {
+                "$ref": "diagram-003"
+              },
+              "model": {
+                "$ref": "relationship-031"
+              },
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "edge-name-070",
+                  "_parent": {
+                    "$ref": "relationship-view-069"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 610,
+                  "top": 390,
+                  "width": 56,
+                  "height": 14,
+                  "alpha": 0,
+                  "distance": 24,
+                  "hostEdge": {
+                    "$ref": "relationship-view-069"
+                  },
+                  "edgePosition": 1,
+                  "text": "receives"
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "tail-name-071",
+                  "_parent": {
+                    "$ref": "relationship-view-069"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 610,
+                  "top": 406,
+                  "height": 14,
+                  "alpha": 0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-069"
+                  },
+                  "edgePosition": 2
+                },
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "head-name-072",
+                  "_parent": {
+                    "$ref": "relationship-view-069"
+                  },
+                  "font": "Arial;12;0",
+                  "left": 610,
+                  "top": 374,
+                  "height": 14,
+                  "alpha": -0.52,
+                  "distance": 20,
+                  "hostEdge": {
+                    "$ref": "relationship-view-069"
+                  }
+                }
+              ],
+              "font": "Arial;12;0",
+              "head": {
+                "$ref": "entity-view-055"
+              },
+              "tail": {
+                "$ref": "entity-view-040"
+              },
+              "lineStyle": 2,
+              "points": "665:278;665:500;582:500",
+              "nameLabel": {
+                "$ref": "edge-name-070"
+              },
+              "tailNameLabel": {
+                "$ref": "tail-name-071"
+              },
+              "headNameLabel": {
+                "$ref": "head-name-072"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "entity-004",
+          "_parent": {
+            "$ref": "model-002"
+          },
+          "name": "observers",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "column-005",
+              "_parent": {
+                "$ref": "entity-004"
+              },
+              "name": "id",
+              "type": "INTEGER",
+              "length": 0,
+              "primaryKey": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-006",
+              "_parent": {
+                "$ref": "entity-004"
+              },
+              "name": "full_name",
+              "type": "VARCHAR",
+              "length": "80"
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-007",
+              "_parent": {
+                "$ref": "entity-004"
+              },
+              "name": "email",
+              "type": "VARCHAR",
+              "length": "120",
+              "unique": true
+            }
+          ],
+          "ownedElements": [
+            {
+              "_type": "ERDRelationship",
+              "_id": "relationship-025",
+              "_parent": {
+                "$ref": "entity-004"
+              },
+              "name": "creates",
+              "end1": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-026",
+                "_parent": {
+                  "$ref": "relationship-025"
+                },
+                "reference": {
+                  "$ref": "entity-004"
+                },
+                "cardinality": "1"
+              },
+              "end2": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-027",
+                "_parent": {
+                  "$ref": "relationship-025"
+                },
+                "reference": {
+                  "$ref": "entity-008"
+                },
+                "cardinality": "0..*"
+              }
+            },
+            {
+              "_type": "ERDRelationship",
+              "_id": "relationship-028",
+              "_parent": {
+                "$ref": "entity-004"
+              },
+              "name": "adds",
+              "end1": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-029",
+                "_parent": {
+                  "$ref": "relationship-028"
+                },
+                "reference": {
+                  "$ref": "entity-004"
+                },
+                "cardinality": "1"
+              },
+              "end2": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-030",
+                "_parent": {
+                  "$ref": "relationship-028"
+                },
+                "reference": {
+                  "$ref": "entity-021"
+                },
+                "cardinality": "0..*"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "entity-008",
+          "_parent": {
+            "$ref": "model-002"
+          },
+          "name": "asteroid_dates",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "column-009",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "id",
+              "type": "INTEGER",
+              "length": 0,
+              "primaryKey": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-010",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "designation",
+              "type": "VARCHAR",
+              "length": "120"
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-011",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "short_description",
+              "type": "VARCHAR",
+              "length": "700",
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-012",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "status",
+              "type": "VARCHAR",
+              "length": "16"
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-013",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "image_url",
+              "type": "VARCHAR",
+              "length": "500",
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-014",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "video_url",
+              "type": "VARCHAR",
+              "length": "500",
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-015",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "length": 0
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-016",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "formed_at",
+              "type": "TIMESTAMP",
+              "length": 0,
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-017",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "creator_id",
+              "type": "INTEGER",
+              "length": 0,
+              "foreignKey": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-018",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "approach_month",
+              "type": "SMALLINT",
+              "length": 0,
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-019",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "approach_day",
+              "type": "SMALLINT",
+              "length": 0,
+              "nullable": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-020",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "minimum_distance_au",
+              "type": "NUMERIC",
+              "length": "8,5",
+              "nullable": true
+            }
+          ],
+          "documentation": "CHECK (status IN (draft, published, deleted))\nON DELETE RESTRICT for creator_id",
+          "ownedElements": [
+            {
+              "_type": "ERDRelationship",
+              "_id": "relationship-031",
+              "_parent": {
+                "$ref": "entity-008"
+              },
+              "name": "receives",
+              "end1": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-032",
+                "_parent": {
+                  "$ref": "relationship-031"
+                },
+                "reference": {
+                  "$ref": "entity-008"
+                },
+                "cardinality": "1"
+              },
+              "end2": {
+                "_type": "ERDRelationshipEnd",
+                "_id": "end-033",
+                "_parent": {
+                  "$ref": "relationship-031"
+                },
+                "reference": {
+                  "$ref": "entity-021"
+                },
+                "cardinality": "0..*"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "entity-021",
+          "_parent": {
+            "$ref": "model-002"
+          },
+          "name": "observer_date_likes",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "column-022",
+              "_parent": {
+                "$ref": "entity-021"
+              },
+              "name": "id",
+              "type": "INTEGER",
+              "length": 0,
+              "primaryKey": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-023",
+              "_parent": {
+                "$ref": "entity-021"
+              },
+              "name": "observer_id",
+              "type": "INTEGER",
+              "length": 0,
+              "foreignKey": true
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "column-024",
+              "_parent": {
+                "$ref": "entity-021"
+              },
+              "name": "asteroid_date_id",
+              "type": "INTEGER",
+              "length": 0,
+              "foreignKey": true
+            }
+          ],
+          "documentation": "UNIQUE (observer_id, asteroid_date_id)\nON DELETE RESTRICT for all foreign keys"
+        }
+      ]
+    }
+  ]
+}
