@@ -111,7 +111,7 @@ export class DateSeedService implements OnApplicationBootstrap {
 
     if (datesCount > 0) {
       const dates = await this.datesRepository.find();
-      const knownDays = new Map(
+      const knownDates = new Map(
         publishedDates.map((date) => [date.designation, {
           approachMonth: date.approachMonth,
           approachDay: date.approachDay,
@@ -121,7 +121,7 @@ export class DateSeedService implements OnApplicationBootstrap {
       );
 
       for (const date of dates) {
-        const knownDate = knownDays.get(date.designation);
+        const knownDate = knownDates.get(date.designation);
 
         if (
           date.approachMonth === null ||

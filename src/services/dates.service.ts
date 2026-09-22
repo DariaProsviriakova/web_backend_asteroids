@@ -42,31 +42,6 @@ export class DatesService {
     return query.getMany();
   }
 
-  async getMonthBounds() {
-    const result = await this.datesRepository
-      .createQueryBuilder("date")
-      .select("MIN(date.approachMonth)", "min")
-      .addSelect("MAX(date.approachMonth)", "max")
-      .where("date.status = :status", { status: "published" })
-      .getRawOne<{ min: string | null; max: string | null }>();
-
-    return {
-      min: result?.min ? Number(result.min) : 1,
-      max: result?.max ? Number(result.max) : 31
-    };
-  }
-
-  async getPublishedMonthValues(): Promise<number[]> {
-    const rows = await this.datesRepository
-      .createQueryBuilder("date")
-      .select("DISTINCT date.approachMonth", "month")
-      .where("date.status = :status", { status: "published" })
-      .orderBy("date.approachMonth", "ASC")
-      .getRawMany<{ month: string }>();
-
-    return rows.map((row) => Number(row.month));
-  }
-
   async getPublishedDateById(id: number): Promise<AsteroidDate | null> {
     return this.datesRepository.findOne({
       where: { id, status: "published" },

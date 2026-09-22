@@ -35,7 +35,6 @@ export class DateFeedController {
       title: "МИНИМАЛЬНОЕ РАССТОЯНИЕ ДО ЗЕМЛИ",
       designation: currentDate.designation,
       topicDate: formatTopicDate(currentDate.approachMonth, currentDate.approachDay),
-      approachDate: formatTopicDate(currentDate.approachMonth, currentDate.approachDay),
       distance: formatDistance(currentDate.minimumDistanceAu),
       description: currentDate.shortDescription,
       imageUrl: this.datesService.getImageUrl(currentDate),

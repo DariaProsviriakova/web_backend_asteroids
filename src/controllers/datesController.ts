@@ -25,18 +25,16 @@ export class DatesController {
   @Get()
   @Header("Content-Type", "text/html; charset=utf-8")
   async renderDates(@Query("maxMonth") maxMonthQuery?: string) {
-    const bounds = await this.datesService.getMonthBounds();
-    const publishedMonths = await this.datesService.getPublishedMonthValues();
     const hasMonthFilter = maxMonthQuery !== undefined && maxMonthQuery.trim() !== "";
-    const parsedMaxMonth = parseIntegerInRange(maxMonthQuery, bounds.min, bounds.max);
+    const parsedMaxMonth = parseIntegerInRange(maxMonthQuery, 1, 12);
     const maxMonth = hasMonthFilter ? parsedMaxMonth ?? 0 : undefined;
-    const selectedMonth = maxMonth ?? bounds.max;
+    const selectedMonth = maxMonth ?? 12;
     const dates = await this.datesService.getPublishedDates(maxMonth);
     const cards = dates.length
       ? dates.map((date) => renderCard(date, this.datesService)).join("")
       : `<p class="empty-list">До месяца ${escapeHtml(selectedMonth)} ничего не найдено.</p>`;
 
-    const monthMarkValues = publishedMonths.length ? publishedMonths : [bounds.min, bounds.max];
+    const monthMarkValues = Array.from({ length: 12 }, (_, index) => index + 1);
     const monthMarks = monthMarkValues
       .map((month) => `<option value="${month}">${month}</option>`)
       .join("");
@@ -45,8 +43,8 @@ export class DatesController {
       .join("");
 
     const body = fillTemplate("dates.html", {
-      minMonth: bounds.min,
-      maxMonth: bounds.max,
+      minMonth: 1,
+      maxMonth: 12,
       selectedMonth,
       selectedMonthLabel: selectedMonth
     })
