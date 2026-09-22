@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const port = Number(process.env.PORT ?? 3000);
   await app.listen(port);
-  console.log(`Asteroids lab app: http://localhost:${port}`);
+  console.log(`Asteroids backend: http://localhost:${port}`);
 }
 
 void bootstrap();

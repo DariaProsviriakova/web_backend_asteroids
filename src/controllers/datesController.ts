@@ -5,7 +5,7 @@ import { escapeHtml, formatDistance, formatTopicDate, parseIntegerInRange } from
 import { fillTemplate, renderPage } from "../lib/template.js";
 import { DatesService } from "../services/dates.service.js";
 
-const renderCard = (date: AsteroidDate, datesService: DatesService) =>
+const renderDateCard = (date: AsteroidDate, datesService: DatesService) =>
   fillTemplate("partials/date-card.html", {
     id: date.id,
     href: `/dates/feed/${date.id}`,
@@ -30,8 +30,8 @@ export class DatesController {
     const maxMonth = hasMonthFilter ? parsedMaxMonth ?? 0 : undefined;
     const selectedMonth = maxMonth ?? 12;
     const dates = await this.datesService.getPublishedDates(maxMonth);
-    const cards = dates.length
-      ? dates.map((date) => renderCard(date, this.datesService)).join("")
+    const dateCards = dates.length
+      ? dates.map((date) => renderDateCard(date, this.datesService)).join("")
       : `<p class="empty-list">До месяца ${escapeHtml(selectedMonth)} ничего не найдено.</p>`;
 
     const monthMarkValues = Array.from({ length: 12 }, (_, index) => index + 1);
@@ -50,11 +50,11 @@ export class DatesController {
     })
       .replace("{{monthMarks}}", monthMarks)
       .replace("{{monthLabels}}", monthLabels)
-      .replace("{{cards}}", cards);
+      .replace("{{dateCards}}", dateCards);
 
     return renderPage({
       title: "Выбор даты",
-      active: "cards",
+      active: "dates",
       body
     });
   }
