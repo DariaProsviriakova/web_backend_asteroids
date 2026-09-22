@@ -1,8 +1,8 @@
-export type ServiceStatus = "draft" | "published" | "deleted";
+export type DateStatus = "draft" | "published" | "deleted";
 
-export type AsteroidService = {
+export type AsteroidDate = {
   id: number;
-  status: ServiceStatus;
+  status: DateStatus;
   title: string;
   designation: string;
   approachDate: string;
@@ -28,13 +28,13 @@ const minioUrl = (key: string) => `${minioPublicBaseUrl}/${minioBucket}/${key}`;
 const makeLikes = (count: number) =>
   Array.from({ length: count }, (_, index) => `u-${String(index + 1).padStart(3, "0")}`);
 
-const feedTitle = "Минимальное расстояние астероида до Земли";
+const dateTitle = "Минимальное расстояние астероида до Земли";
 
-export const asteroidServices: AsteroidService[] = [
+export const asteroidDates: AsteroidDate[] = [
   {
     id: 1001,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 KJ",
     approachDate: "12 мая 2026",
     approachDateIso: "2026-05-12",
@@ -54,7 +54,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1002,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 KK3",
     approachDate: "15 мая 2026",
     approachDateIso: "2026-05-15",
@@ -74,7 +74,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1003,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 KR",
     approachDate: "18 мая 2026",
     approachDateIso: "2026-05-18",
@@ -94,7 +94,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1004,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 JD4",
     approachDate: "21 мая 2026",
     approachDateIso: "2026-05-21",
@@ -114,7 +114,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1005,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 HF4",
     approachDate: "24 мая 2026",
     approachDateIso: "2026-05-24",
@@ -134,7 +134,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1006,
     status: "published",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 KL2",
     approachDate: "27 мая 2026",
     approachDateIso: "2026-05-27",
@@ -154,7 +154,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1901,
     status: "draft",
-    title: "Заявка на расчет",
+    title: "Добавление расчета",
     designation: "2026 KJ",
     approachDate: "12 мая 2026",
     approachDateIso: "2026-05-12",
@@ -174,7 +174,7 @@ export const asteroidServices: AsteroidService[] = [
   {
     id: 1999,
     status: "deleted",
-    title: feedTitle,
+    title: dateTitle,
     designation: "2026 XX",
     approachDate: "30 мая 2026",
     approachDateIso: "2026-05-30",
@@ -183,7 +183,7 @@ export const asteroidServices: AsteroidService[] = [
     declination: "+00° 00' 00\"",
     velocityKms: 0,
     magnitudeH: 0,
-    description: "Удаленная услуга не отображается в интерфейсе.",
+    description: "Удаленная дата не отображается в интерфейсе.",
     imageKey: "asteroid-day-27.png",
     videoKey: "asteroid-day-27.mp4",
     imageUrl: minioUrl("asteroid-day-27.png"),

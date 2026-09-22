@@ -57,7 +57,7 @@ textarea {
 
 .feed-page,
 .form-page,
-.cards-page {
+.dates-page {
   min-height: 100%;
   padding-bottom: 92px;
 }
@@ -214,7 +214,7 @@ textarea {
 }
 
 .form-page,
-.cards-page {
+.dates-page {
   background: #ffffff;
   height: 100%;
   overflow-y: auto;
@@ -222,7 +222,7 @@ textarea {
 }
 
 .form-page::-webkit-scrollbar,
-.cards-page::-webkit-scrollbar {
+.dates-page::-webkit-scrollbar {
   display: none;
 }
 
@@ -231,7 +231,7 @@ textarea {
 }
 
 .page-header,
-.cards-header {
+.dates-header {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -239,7 +239,7 @@ textarea {
 }
 
 .page-header h1,
-.cards-header h1 {
+.dates-header h1 {
   margin: 0;
   font-size: 25px;
   line-height: 1;
@@ -411,11 +411,11 @@ textarea {
   filter: brightness(1.08);
 }
 
-.cards-page {
+.dates-page {
   padding: 34px 28px 104px;
 }
 
-.cards-header {
+.dates-header {
   margin-bottom: 32px;
 }
 
@@ -432,7 +432,7 @@ textarea {
   color: var(--muted);
 }
 
-.cards-grid {
+.dates-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px 20px;
@@ -597,7 +597,7 @@ textarea {
     font-size: 18px;
   }
 
-  .cards-grid {
+  .dates-grid {
     gap: 14px;
   }
 

@@ -7,7 +7,7 @@ import { escapeHtml } from "./format.js";
 const rootDir = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
 const templatesDir = join(rootDir, "templates");
 
-export type PageName = "feed" | "add" | "cards";
+export type PageName = "feed" | "add" | "dates";
 
 type RenderPageOptions = {
   title: string;
@@ -33,7 +33,7 @@ export const renderPage = ({ title, active, body }: RenderPageOptions) => {
   const nav = fillTemplate("partials/tabs.html", {
     feedActive: active === "feed" ? "active" : "",
     addActive: active === "add" ? "active" : "",
-    cardsActive: active === "cards" ? "active" : ""
+    datesActive: active === "dates" ? "active" : ""
   });
 
   return readTemplate("layout.html")

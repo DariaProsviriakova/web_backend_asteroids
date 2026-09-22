@@ -1,4 +1,4 @@
-import type { AsteroidService } from "../model/services.js";
+import type { AsteroidDate } from "../model/dates.js";
 
 export const escapeHtml = (value: unknown) =>
   String(value)
@@ -20,7 +20,7 @@ export const formatVelocity = (velocityKms: number) =>
     maximumFractionDigits: 1
   })} км/с`;
 
-export const likeCount = (service: AsteroidService) => service.likes.length;
+export const likeCount = (date: AsteroidDate) => date.likes.length;
 
 export const normalizeSearch = (value: string) =>
   value.trim().toLowerCase().replaceAll("ё", "е");

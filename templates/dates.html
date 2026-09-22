@@ -1,16 +1,16 @@
-<main class="cards-page">
-  <header class="cards-header">
+<main class="dates-page">
+  <header class="dates-header">
     <h1>ВЫБОР ДАТЫ</h1>
   </header>
 
-  <form class="filter-form" action="/cards" method="get">
+  <form class="filter-form" action="/dates" method="get">
     <label>
       <span>Фильтр по дате</span>
       <input name="approachDate" type="text" value="{{searchDate}}" placeholder="Например: 12 мая 2026">
     </label>
   </form>
 
-  <section class="cards-grid" aria-label="Список услуг">
-    {{cards}}
+  <section class="dates-grid" aria-label="Список дат">
+    {{dateCards}}
   </section>
 </main>
