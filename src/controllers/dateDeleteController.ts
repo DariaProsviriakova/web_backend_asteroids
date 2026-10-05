@@ -12,7 +12,7 @@ export class DateDeleteController {
     const id = Number(idParam);
 
     if (Number.isFinite(id)) {
-      await this.datesService.deleteDateWithSqlUpdate(id);
+      await this.datesService.deleteDateForCurrentObserver(id);
     }
 
     return { url: "/dates" };

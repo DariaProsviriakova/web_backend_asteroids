@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
+import { ApiDatesController } from "./controllers/apiDatesController.js";
+import { ApiUsersController } from "./controllers/apiUsersController.js";
 import { DateCreateController } from "./controllers/dateCreateController.js";
 import { DateDeleteController } from "./controllers/dateDeleteController.js";
 import { DateDraftController } from "./controllers/dateDraftController.js";
@@ -11,6 +13,7 @@ import { DateSeedService } from "./database/date-seed.service.js";
 import { AsteroidDate } from "./entities/asteroid-date.entity.js";
 import { ObserverDateLike } from "./entities/observer-date-like.entity.js";
 import { Observer } from "./entities/observer.entity.js";
+import { DateMediaStorageService } from "./services/date-media-storage.service.js";
 import { DatesService } from "./services/dates.service.js";
 
 @Module({
@@ -28,6 +31,8 @@ import { DatesService } from "./services/dates.service.js";
     TypeOrmModule.forFeature([AsteroidDate, Observer, ObserverDateLike])
   ],
   controllers: [
+    ApiDatesController,
+    ApiUsersController,
     DateFeedController,
     DateDraftController,
     DateCreateController,
@@ -35,6 +40,6 @@ import { DatesService } from "./services/dates.service.js";
     DatesController,
     DateDeleteController
   ],
-  providers: [DatesService, DateSeedService]
+  providers: [DatesService, DateMediaStorageService, DateSeedService]
 })
 export class AppModule {}

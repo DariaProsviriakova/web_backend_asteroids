@@ -12,15 +12,9 @@ export class DateFeedController {
   @Header("Content-Type", "text/html; charset=utf-8")
   async renderFeed(@Param("id") idParam?: string, @Query("next") next?: string) {
     const id = idParam ? Number(idParam) : undefined;
-    const requestedDate = id ? await this.datesService.getPublishedDateById(id) : null;
-    const directUnavailableDate = id !== undefined && !requestedDate && next !== "true";
-    const firstDate = requestedDate || directUnavailableDate
-      ? null
-      : await this.datesService.getFirstPublishedDate();
-    const currentDate =
-      next === "true" && id
-        ? await this.datesService.getNextPublishedDate(id)
-        : requestedDate ?? firstDate;
+    const currentDate = Number.isFinite(id)
+      ? await this.datesService.getPublishedFeedDate({ id, next: next === "true" })
+      : await this.datesService.getPublishedFeedDate();
 
     if (!currentDate) {
       return renderPage({

@@ -141,6 +141,8 @@ export class DateSeedService implements OnApplicationBootstrap {
         }
       }
 
+      await this.trimLikesToFive();
+
       return;
     }
 
@@ -200,5 +202,17 @@ export class DateSeedService implements OnApplicationBootstrap {
         )
       )
     );
+  }
+
+  private async trimLikesToFive() {
+    const dates = await this.datesRepository.find({ relations: { likes: true } });
+
+    for (const date of dates) {
+      const extraLikes = (date.likes ?? []).slice(5);
+
+      for (const like of extraLikes) {
+        await this.likesRepository.delete({ id: like.id });
+      }
+    }
   }
 }
