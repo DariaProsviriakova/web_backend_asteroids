@@ -52,24 +52,21 @@ export class DatesService {
   async getFirstPublishedDate(): Promise<AsteroidDate | null> {
     return this.datesRepository.findOne({
       where: { status: "published" },
-      order: { approachMonth: "ASC", approachDay: "ASC", id: "ASC" },
+      order: { id: "ASC" },
       relations: { likes: true }
     });
   }
 
   async getNextPublishedDate(id: number): Promise<AsteroidDate | null> {
-    const dates = await this.getPublishedDates();
-    const currentIndex = dates.findIndex((date) => date.id === id);
-
-    if (dates.length === 0) {
-      return null;
-    }
-
-    if (currentIndex === -1) {
-      return dates[0];
-    }
-
-    return dates[(currentIndex + 1) % dates.length];
+    return this.datesRepository
+      .createQueryBuilder("date")
+      .leftJoinAndSelect("date.likes", "likes")
+      .where("date.status = :status", { status: "published" })
+      .orderBy("CASE WHEN date.id > :id THEN 0 ELSE 1 END", "ASC")
+      .addOrderBy("date.id", "ASC")
+      .setParameter("id", id)
+      .take(1)
+      .getOne();
   }
 
   async getDraftForCurrentObserver(): Promise<AsteroidDate | null> {
@@ -143,6 +140,8 @@ export class DatesService {
   }
 
   getLikeCount(date: AsteroidDate): number {
-    return date.likes?.length ?? 0;
+    const likesCount = date.likes?.length ?? 0;
+
+    return Math.min(5, Math.max(1, likesCount));
   }
 }

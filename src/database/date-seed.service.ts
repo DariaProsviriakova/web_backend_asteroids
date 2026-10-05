@@ -6,10 +6,13 @@ import { AsteroidDate } from "../entities/asteroid-date.entity.js";
 import { ObserverDateLike } from "../entities/observer-date-like.entity.js";
 import { Observer } from "../entities/observer.entity.js";
 
+const useMinioSeedAssets = process.env.USE_MINIO_SEED_ASSETS === "true";
 const minioPublicBaseUrl = process.env.MINIO_PUBLIC_BASE_URL ?? "http://localhost:9000";
 const minioBucket = process.env.MINIO_BUCKET ?? "asteroids-lab";
 
 const minioUrl = (key: string) => `${minioPublicBaseUrl}/${minioBucket}/${key}`;
+const localSeedAssetUrl = (key: string) => `/seed-assets/asteroids-lab/${key}`;
+const seedAssetUrl = (key: string) => (useMinioSeedAssets ? minioUrl(key) : localSeedAssetUrl(key));
 
 const publishedDates = [
   {
@@ -19,9 +22,9 @@ const publishedDates = [
     approachMonth: 5,
     approachDay: 12,
     minimumDistanceAu: 0.02231,
-    imageUrl: minioUrl("asteroid-hero.png"),
-    videoUrl: minioUrl("asteroid-day-12.mp4"),
-    likesCount: 128
+    imageUrl: seedAssetUrl("asteroid-hero.png"),
+    videoUrl: seedAssetUrl("asteroid-day-12.mp4"),
+    likesCount: 5
   },
   {
     designation: "2026 KK3",
@@ -30,9 +33,9 @@ const publishedDates = [
     approachMonth: 5,
     approachDay: 15,
     minimumDistanceAu: 0.04297,
-    imageUrl: minioUrl("asteroid-day-15.png"),
-    videoUrl: minioUrl("asteroid-day-15.mp4"),
-    likesCount: 97
+    imageUrl: seedAssetUrl("asteroid-day-15.png"),
+    videoUrl: seedAssetUrl("asteroid-day-15.mp4"),
+    likesCount: 4
   },
   {
     designation: "2026 KR",
@@ -41,9 +44,9 @@ const publishedDates = [
     approachMonth: 6,
     approachDay: 18,
     minimumDistanceAu: 0.01385,
-    imageUrl: minioUrl("asteroid-day-18.png"),
-    videoUrl: minioUrl("asteroid-day-18.mp4"),
-    likesCount: 64
+    imageUrl: seedAssetUrl("asteroid-day-18.png"),
+    videoUrl: seedAssetUrl("asteroid-day-18.mp4"),
+    likesCount: 3
   },
   {
     designation: "2026 JD4",
@@ -52,9 +55,9 @@ const publishedDates = [
     approachMonth: 6,
     approachDay: 21,
     minimumDistanceAu: 0.01088,
-    imageUrl: minioUrl("asteroid-day-21.png"),
-    videoUrl: minioUrl("asteroid-day-21.mp4"),
-    likesCount: 53
+    imageUrl: seedAssetUrl("asteroid-day-21.png"),
+    videoUrl: seedAssetUrl("asteroid-day-21.mp4"),
+    likesCount: 2
   },
   {
     designation: "2026 HF4",
@@ -63,9 +66,9 @@ const publishedDates = [
     approachMonth: 7,
     approachDay: 24,
     minimumDistanceAu: 0.06819,
-    imageUrl: minioUrl("asteroid-day-24.png"),
-    videoUrl: minioUrl("asteroid-day-24.mp4"),
-    likesCount: 42
+    imageUrl: seedAssetUrl("asteroid-day-24.png"),
+    videoUrl: seedAssetUrl("asteroid-day-24.mp4"),
+    likesCount: 1
   },
   {
     designation: "2026 KL2",
@@ -74,9 +77,9 @@ const publishedDates = [
     approachMonth: 7,
     approachDay: 27,
     minimumDistanceAu: 0.00693,
-    imageUrl: minioUrl("asteroid-day-27.png"),
-    videoUrl: minioUrl("asteroid-day-27.mp4"),
-    likesCount: 38
+    imageUrl: seedAssetUrl("asteroid-day-27.png"),
+    videoUrl: seedAssetUrl("asteroid-day-27.mp4"),
+    likesCount: 1
   }
 ];
 
@@ -175,8 +178,8 @@ export class DateSeedService implements OnApplicationBootstrap {
         shortDescription:
           "Удаленная запись оставлена в БД для демонстрации логического удаления через статус.",
         status: "deleted",
-        imageUrl: minioUrl("asteroid-day-27.png"),
-        videoUrl: minioUrl("asteroid-day-27.mp4"),
+        imageUrl: seedAssetUrl("asteroid-day-27.png"),
+        videoUrl: seedAssetUrl("asteroid-day-27.mp4"),
         approachMonth: 5,
         approachDay: 30,
         minimumDistanceAu: 0.11,
