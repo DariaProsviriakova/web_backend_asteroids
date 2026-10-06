@@ -1,0 +1,7 @@
+ id | designation | status  | creator_id |                      image_url                      |                      video_url                      | approach_month | approach_day 
+----+-------------+---------+------------+-----------------------------------------------------+-----------------------------------------------------+----------------+--------------
+ 21 | 2027 REPORT | deleted |          1 | /uploads/dates/date-image-20261006-6992d43dd8a5.png | /uploads/dates/date-video-20261006-87424f49fca0.mp4 |              8 |           14
+ 20 | 2027 REPORT | deleted |          1 | /uploads/dates/date-image-20261006-96f3ce0c0f04.png | /uploads/dates/date-video-20261006-f96ae088a09a.mp4 |              8 |           14
+ 19 | 2027 REPORT | deleted |          1 | /uploads/dates/date-image-20261006-1ee8d39ab585.png | /uploads/dates/date-video-20261006-d20ee901f971.mp4 |              8 |           14
+(3 rows)
+
