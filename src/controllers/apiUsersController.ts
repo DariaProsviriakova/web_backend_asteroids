@@ -54,8 +54,7 @@ export class ApiUsersController {
     return {
       data: {
         authenticated: 1,
-        email: body.email ?? getCurrentObserver().email,
-        message: "Authentication stub for lab 4"
+        email: body.email ?? getCurrentObserver().email
       }
     };
   }
@@ -64,8 +63,7 @@ export class ApiUsersController {
   async logout() {
     return {
       data: {
-        authenticated: 0,
-        message: "Logout stub for lab 4"
+        authenticated: 0
       }
     };
   }

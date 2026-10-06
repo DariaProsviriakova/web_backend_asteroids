@@ -1,0 +1,272 @@
+{
+  "info": {
+    "_postman_id": "9d793264-1b7f-4f47-a8e5-asteroid-dates-lr3",
+    "name": "ЛР3 Asteroid Dates",
+    "description": "Коллекция запросов для демонстрации лабораторной 3: список услуг, создание услуги с файлами, черновик, публикация, лента, лайк, soft delete и регистрация пользователя.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "publishedId",
+      "value": "21"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 GET список услуг с фильтром",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates?maxMonth=7",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates"
+          ],
+          "query": [
+            {
+              "key": "maxMonth",
+              "value": "7"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "02 POST добавление услуги с картинкой и видео",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "designation",
+              "value": "2027 REPORT",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": "public/assets/default-date.png"
+            },
+            {
+              "key": "video",
+              "type": "file",
+              "src": "public/assets/default-date.mp4"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/dates",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates"
+          ]
+        }
+      }
+    },
+    {
+      "name": "03 GET получение черновика",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/draft",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "draft"
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 PUT публикация услуги",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"shortDescription\": \"Демонстрационная запись для отчета ЛР3.\",\n  \"approachMonth\": 8,\n  \"approachDay\": 14,\n  \"minimumDistanceAu\": 0.023\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/publish",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "publish"
+          ]
+        }
+      }
+    },
+    {
+      "name": "05 GET лента без id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/feed",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "feed"
+          ]
+        }
+      }
+    },
+    {
+      "name": "06 GET лента по id next true",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/feed?id=2&next=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "feed"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "2"
+            },
+            {
+              "key": "next",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "07 POST like поставить",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"like\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/2/like",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "2",
+            "like"
+          ]
+        }
+      }
+    },
+    {
+      "name": "08 POST like отменить",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"like\": 0\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/2/like",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "2",
+            "like"
+          ]
+        }
+      }
+    },
+    {
+      "name": "09 DELETE soft delete своей услуги",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/{{publishedId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "{{publishedId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10 POST регистрация пользователя",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Пользователь отчета\",\n  \"email\": \"report-demo@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "register"
+          ]
+        }
+      }
+    }
+  ]
+}

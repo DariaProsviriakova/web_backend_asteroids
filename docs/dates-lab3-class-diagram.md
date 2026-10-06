@@ -42,7 +42,6 @@ classDiagram
     videoUrl
     approachMonth
     approachDay
-    minimumDistanceAu
     createdAt
     formedAt
     creatorId
@@ -52,6 +51,7 @@ classDiagram
     id
     fullName
     email
+    passwordHash
   }
 
   class ObserverDateLike {

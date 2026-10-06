@@ -112,19 +112,8 @@ export class ApiDatesController {
   }
 
   @Get("feed")
-  async getFirstFeedDate() {
-    const date = await this.datesService.getPublishedFeedDate();
-
-    if (!date) {
-      throw new NotFoundException("No published dates found");
-    }
-
-    return { data: serializeAsteroidDate(date, this.datesService) };
-  }
-
-  @Get("feed/:id")
-  async getFeedDate(@Param("id") idParam: string, @Query("next") next?: string) {
-    const id = parseNumericId(idParam);
+  async getFeedDate(@Query("id") idQuery?: string, @Query("next") next?: string) {
+    const id = idQuery ? parseNumericId(idQuery) : undefined;
     const date = await this.datesService.getPublishedFeedDate({
       id,
       next: next === "true"
@@ -134,7 +123,7 @@ export class ApiDatesController {
       throw new NotFoundException("Date not found");
     }
 
-    return { data: serializeAsteroidDate(date, this.datesService) };
+    return { data: [serializeAsteroidDate(date, this.datesService)] };
   }
 
   @Get("draft")
@@ -208,7 +197,7 @@ export class ApiDatesController {
       throw new NotFoundException("Own non-deleted date not found");
     }
 
-    return { data: { id, status: "deleted" } };
+    return { data: { id, isDeleted: 1 } };
   }
 
   @Post(":id/like")

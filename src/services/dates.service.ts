@@ -72,7 +72,8 @@ export class DatesService {
 
     if (options.id !== undefined && options.next) {
       return query
-        .orderBy("CASE WHEN date.id > :id THEN 0 ELSE 1 END", "ASC")
+        .addSelect("CASE WHEN date.id > :id THEN 0 ELSE 1 END", "next_sort")
+        .orderBy("next_sort", "ASC")
         .addOrderBy("date.id", "ASC")
         .setParameter("id", options.id)
         .take(1)
@@ -193,7 +194,7 @@ export class DatesService {
   getLikeCount(date: AsteroidDate): number {
     const likesCount = date.likes?.length ?? 0;
 
-    return Math.min(5, Math.max(1, likesCount));
+    return Math.min(5, likesCount);
   }
 
   isLikedByCurrentObserver(date: AsteroidDate): boolean {

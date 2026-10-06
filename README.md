@@ -27,8 +27,7 @@ DATE_MEDIA_STORAGE=minio npm run start:dev
 | Метод | URL | Назначение | Тело/параметры |
 | --- | --- | --- | --- |
 | `GET` | `/api/dates?maxMonth=7` | Список опубликованных дат с фильтром по месяцу | `maxMonth` 1-12 |
-| `GET` | `/api/dates/feed` | Первая запись ленты без id в URL | нет |
-| `GET` | `/api/dates/feed/:id?next=true` | Следующая опубликованная запись по id, id могут идти с пропусками | `next=true` |
+| `GET` | `/api/dates/feed?id=2&next=true` | Лента: без `id` возвращает первую запись, с `id` и `next=true` возвращает следующую; id могут идти с пропусками | `id`, `next=true` |
 | `GET` | `/api/dates/draft` | Черновик текущего пользователя, не больше одной записи | нет |
 | `POST` | `/api/dates` | Создать или обновить черновик с файлами | `multipart/form-data`: `designation`, `image`, `video` |
 | `PUT` | `/api/dates/publish` | Опубликовать текущий черновик | `shortDescription`, `approachMonth`, `approachDay`, `minimumDistanceAu` |
@@ -38,7 +37,7 @@ DATE_MEDIA_STORAGE=minio npm run start:dev
 | `POST` | `/api/users/auth` | Заглушка аутентификации для 4 лабораторной | `email` |
 | `POST` | `/api/users/logout` | Заглушка деавторизации для 4 лабораторной | нет |
 
-Системные поля `id`, `status`, `creatorId`, `createdAt`, `formedAt` не принимаются от клиента для изменения. Они рассчитываются на бэкенде.
+Системные поля `id`, `status`, `creatorId`, `createdAt`, `formedAt` не принимаются от клиента для изменения. Они рассчитываются на бэкенде. Карточки в JSON возвращают `id`, `designation`, `shortDescription`, `imageUrl`, `videoUrl`, `approachMonth`, `approachDay`, `minimumDistanceAu`, `likesCount`, `isCreator`, `isLiked`.
 
 ## Проверка в Postman/Insomnia
 
@@ -47,7 +46,7 @@ DATE_MEDIA_STORAGE=minio npm run start:dev
 3. `GET /api/dates/draft`
 4. `PUT /api/dates/publish`
 5. `GET /api/dates/feed`
-6. `GET /api/dates/feed/2?next=true`
+6. `GET /api/dates/feed?id=2&next=true`
 7. `POST /api/dates/2/like` с `{ "like": 1 }`
 8. `POST /api/dates/2/like` с `{ "like": 0 }`
 9. `DELETE /api/dates/:id` для своей опубликованной записи
@@ -102,7 +101,6 @@ classDiagram
   class ApiDatesController {
     GET /api/dates
     GET /api/dates/feed
-    GET /api/dates/feed/:id
     GET /api/dates/draft
     POST /api/dates
     PUT /api/dates/publish
