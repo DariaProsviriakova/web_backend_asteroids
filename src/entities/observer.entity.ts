@@ -15,6 +15,10 @@ export class Observer {
   @Column({ length: 120, unique: true })
   email!: string;
 
+  // Existing LR3 observers without a password cannot log in.
+  @Column({ name: "password_hash", type: "varchar", length: 255, nullable: true, select: false })
+  passwordHash!: string | null;
+
   @OneToMany(() => AsteroidDate, (date) => date.creator)
   dates!: Relation<AsteroidDate[]>;
 

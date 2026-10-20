@@ -1,8 +1,10 @@
+import { ApiExcludeController } from "@nestjs/swagger";
 import { Body, Controller, Post, Redirect } from "@nestjs/common";
 
 import { parseIntegerInRange } from "../lib/format.js";
 import { DatesService } from "../services/dates.service.js";
 
+@ApiExcludeController()
 @Controller("dates/publish")
 export class DatePublishController {
   constructor(private readonly datesService: DatesService) {}

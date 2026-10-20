@@ -1,4 +1,9 @@
 import { Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthService } from "./auth/auth.service.js";
+import { RedisSessionService } from "./auth/redis-session.service.js";
+import { SessionAuthGuard } from "./auth/session-auth.guard.js";
+import { CurrentObserverService } from "./services/current-observer.service.js";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ApiDatesController } from "./controllers/apiDatesController.js";
@@ -26,7 +31,7 @@ import { DatesService } from "./services/dates.service.js";
       password: process.env.POSTGRES_PASSWORD ?? "asteroids",
       database: process.env.POSTGRES_DB ?? "asteroids_lab2",
       entities: [AsteroidDate, Observer, ObserverDateLike],
-      synchronize: true
+      synchronize: process.env.DB_SYNCHRONIZE !== "false"
     }),
     TypeOrmModule.forFeature([AsteroidDate, Observer, ObserverDateLike])
   ],
@@ -40,6 +45,10 @@ import { DatesService } from "./services/dates.service.js";
     DatesController,
     DateDeleteController
   ],
-  providers: [DatesService, DateMediaStorageService, DateSeedService]
+  providers: [
+    DatesService, DateMediaStorageService, DateSeedService, AuthService,
+    CurrentObserverService, RedisSessionService,
+    { provide: APP_GUARD, useClass: SessionAuthGuard }
+  ]
 })
 export class AppModule {}

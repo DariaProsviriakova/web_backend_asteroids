@@ -1,3 +1,5 @@
+import { ApiExcludeController } from "@nestjs/swagger";
+import { Public } from "../auth/session-auth.guard.js";
 import { Controller, Get, Header, Query } from "@nestjs/common";
 
 import type { AsteroidDate } from "../entities/asteroid-date.entity.js";
@@ -18,10 +20,12 @@ const renderDateCard = (date: AsteroidDate, datesService: DatesService) =>
     designation: date.designation
   });
 
+@ApiExcludeController()
 @Controller("dates")
 export class DatesController {
   constructor(private readonly datesService: DatesService) {}
 
+  @Public()
   @Get()
   @Header("Content-Type", "text/html; charset=utf-8")
   async renderDates(@Query("maxMonth") maxMonthQuery?: string) {

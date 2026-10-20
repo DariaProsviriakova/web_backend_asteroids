@@ -4,9 +4,8 @@ import { Repository } from "typeorm";
 
 import { AsteroidDate } from "../entities/asteroid-date.entity.js";
 import { ObserverDateLike } from "../entities/observer-date-like.entity.js";
-import { getCurrentObserver } from "./current-observer.service.js";
+import { CurrentObserverService } from "./current-observer.service.js";
 
-export const CURRENT_OBSERVER_ID = getCurrentObserver().id;
 export const DEFAULT_IMAGE_URL = "/assets/default-date.png";
 export const DEFAULT_VIDEO_URL = "/assets/default-date.mp4";
 
@@ -29,7 +28,8 @@ export class DatesService {
     @InjectRepository(AsteroidDate)
     private readonly datesRepository: Repository<AsteroidDate>,
     @InjectRepository(ObserverDateLike)
-    private readonly likesRepository: Repository<ObserverDateLike>
+    private readonly likesRepository: Repository<ObserverDateLike>,
+    private readonly currentObserver: CurrentObserverService
   ) {}
 
   async getPublishedDates(maxMonth?: number): Promise<AsteroidDate[]> {
@@ -91,7 +91,7 @@ export class DatesService {
 
   async getDraftForCurrentObserver(): Promise<AsteroidDate | null> {
     return this.datesRepository.findOne({
-      where: { creatorId: CURRENT_OBSERVER_ID, status: "draft" },
+      where: { creatorId: this.currentObserver.require().id, status: "draft" },
       relations: { likes: true }
     });
   }
@@ -121,7 +121,7 @@ export class DatesService {
         approachDay: null,
         minimumDistanceAu: 0.023,
         formedAt: null,
-        creatorId: CURRENT_OBSERVER_ID
+        creatorId: this.currentObserver.require().id
       })
     );
   }
@@ -149,7 +149,7 @@ export class DatesService {
       .update(AsteroidDate)
       .set({ status: "deleted" })
       .where("id = :id", { id })
-      .andWhere("creator_id = :creatorId", { creatorId: CURRENT_OBSERVER_ID })
+      .andWhere("creator_id = :creatorId", { creatorId: this.currentObserver.require().id })
       .andWhere("status <> :deletedStatus", { deletedStatus: "deleted" })
       .execute();
 
@@ -164,16 +164,13 @@ export class DatesService {
     }
 
     const existingLike = await this.likesRepository.findOne({
-      where: { asteroidDateId: id, observerId: CURRENT_OBSERVER_ID }
+      where: { asteroidDateId: id, observerId: this.currentObserver.require().id }
     });
 
     if (like === 1 && !existingLike) {
-      await this.likesRepository.save(
-        this.likesRepository.create({
-          asteroidDateId: id,
-          observerId: CURRENT_OBSERVER_ID
-        })
-      );
+      await this.likesRepository.createQueryBuilder().insert().values({
+        asteroidDateId: id, observerId: this.currentObserver.require().id
+      }).orIgnore().execute();
     }
 
     if (like === 0 && existingLike) {
@@ -181,6 +178,10 @@ export class DatesService {
     }
 
     return this.getPublishedDateById(id);
+  }
+
+  isCreatedByCurrentObserver(date: AsteroidDate): boolean {
+    return date.creatorId === this.currentObserver.get()?.id;
   }
 
   getImageUrl(date: AsteroidDate): string {
@@ -192,12 +193,10 @@ export class DatesService {
   }
 
   getLikeCount(date: AsteroidDate): number {
-    const likesCount = date.likes?.length ?? 0;
-
-    return Math.min(5, likesCount);
+    return date.likes?.length ?? 0;
   }
 
   isLikedByCurrentObserver(date: AsteroidDate): boolean {
-    return date.likes?.some((like) => like.observerId === CURRENT_OBSERVER_ID) ?? false;
+    return date.likes?.some((like) => like.observerId === this.currentObserver.get()?.id) ?? false;
   }
 }

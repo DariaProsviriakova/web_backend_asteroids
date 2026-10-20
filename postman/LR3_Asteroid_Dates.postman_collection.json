@@ -1,55 +1,149 @@
 {
   "info": {
-    "_postman_id": "9d793264-1b7f-4f47-a8e5-asteroid-dates-lr3",
+    "_postman_id": "9d793264-1b7f-4f47-a8e5-3efec0310003",
     "name": "ЛР3 Asteroid Dates",
-    "description": "Коллекция запросов для демонстрации лабораторной 3: список услуг, создание услуги с файлами, черновик, публикация, лента, лайк, soft delete и регистрация пользователя.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "ЛР3: ровно 10 методов по заданию, 3 GET + 5 POST + 1 PUT + 1 DELETE. Сначала npm run start:lab3 (localhost:3003), PostgreSQL и MinIO. Текущий пользователь фиксирован: id=1. Аутентификация и деавторизация — заглушки; cookie, JWT и пароль не нужны. Для файлов рабочая папка Postman — корень проекта. Поля image/video выбираются как File. Для следующей карточки измените Params того же запроса 02, для снятия лайка измените like на 0 в запросе 07. ЛР4 остаётся отдельной коллекцией на localhost:3000."
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:3000"
+      "value": "http://localhost:3003"
     },
     {
-      "key": "publishedId",
-      "value": "21"
+      "key": "dateId",
+      "value": ""
+    },
+    {
+      "key": "likeDateId",
+      "value": ""
+    },
+    {
+      "key": "email",
+      "value": "lab3-observer@example.com"
     }
   ],
   "item": [
     {
-      "name": "01 GET список услуг с фильтром",
+      "name": "01 GET список с фильтрацией",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/dates?maxMonth=7",
+        "description": "Домен услуги. Только опубликованные. maxMonth — верхняя граница месяца; isCreator=0/1 сравнивает автора с фиксированным текущим пользователем.",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Опубликованные услуги и признак автора\", () => pm.response.json().data.forEach(date => { pm.expect(date.status).to.eql(\"published\"); pm.expect([0,1]).to.include(date.isCreator); }));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 GET лента",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/dates?maxMonth=7",
+          "raw": "{{baseUrl}}/api/dates/feed",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "api",
-            "dates"
+            "dates",
+            "feed"
           ],
           "query": [
             {
-              "key": "maxMonth",
-              "value": "7"
+              "key": "id",
+              "value": "{{likeDateId}}",
+              "disabled": true
+            },
+            {
+              "key": "next",
+              "value": "true",
+              "disabled": true
             }
           ]
+        },
+        "description": "Домен услуги. Только опубликованные, isLiked=0/1. Без id — первая; включите id и next=true в Params для следующей. Один GET-метод.",
+        "auth": {
+          "type": "noauth"
         }
-      }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "const date=pm.response.json().data[0];",
+              "pm.collectionVariables.set(\"likeDateId\", date.id);",
+              "pm.test(\"Опубликованная карточка и признак лайка\", () => { pm.expect(date.status).to.eql(\"published\"); pm.expect([0,1]).to.include(date.isLiked); });"
+            ]
+          }
+        }
+      ]
     },
     {
-      "name": "02 POST добавление услуги с картинкой и видео",
+      "name": "03 GET получение черновика без id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/dates/draft",
+        "description": "Домен услуги. Только черновик текущего пользователя, не более одной записи. id не передаётся; если черновика нет, data=null.",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 POST добавление с изображением и видео",
       "request": {
         "method": "POST",
         "header": [],
+        "url": "{{baseUrl}}/api/dates",
+        "description": "Домен услуги. multipart/form-data: designation, image и video именно типа File. Сервер загружает байты в MinIO, генерирует латинские имена и сохраняет их в БД.",
+        "auth": {
+          "type": "noauth"
+        },
         "body": {
           "mode": "formdata",
           "formdata": [
             {
               "key": "designation",
-              "value": "2027 REPORT",
+              "value": "2026 LAB3",
               "type": "text"
             },
             {
@@ -63,39 +157,27 @@
               "src": "public/assets/default-date.mp4"
             }
           ]
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/dates",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates"
-          ]
         }
-      }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"dateId\", pm.response.json().data.id);",
+              "pm.test(\"Собственный черновик\", () => { const date=pm.response.json().data; pm.expect(date.status).to.eql(\"draft\"); pm.expect(date.isCreator).to.eql(1); });"
+            ]
+          }
+        }
+      ]
     },
     {
-      "name": "03 GET получение черновика",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/draft",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "draft"
-          ]
-        }
-      }
-    },
-    {
-      "name": "04 PUT публикация услуги",
+      "name": "05 PUT публикация",
       "request": {
         "method": "PUT",
         "header": [
@@ -104,145 +186,65 @@
             "value": "application/json"
           }
         ],
+        "url": "{{baseUrl}}/api/dates/publish",
+        "description": "Домен услуги. Публикация собственного черновика: status=published и formedAt. Меняются только разрешённые поля.",
+        "auth": {
+          "type": "noauth"
+        },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"shortDescription\": \"Демонстрационная запись для отчета ЛР3.\",\n  \"approachMonth\": 8,\n  \"approachDay\": 14,\n  \"minimumDistanceAu\": 0.023\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/publish",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "publish"
-          ]
-        }
-      }
-    },
-    {
-      "name": "05 GET лента без id",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/feed",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "feed"
-          ]
-        }
-      }
-    },
-    {
-      "name": "06 GET лента по id next true",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/feed?id=2&next=true",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "feed"
-          ],
-          "query": [
-            {
-              "key": "id",
-              "value": "2"
-            },
-            {
-              "key": "next",
-              "value": "true"
+          "raw": "{\n  \"shortDescription\": \"Сближение астероида с Землёй\",\n  \"approachMonth\": 10,\n  \"approachDay\": 18,\n  \"minimumDistanceAu\": 0.023\n}",
+          "options": {
+            "raw": {
+              "language": "json"
             }
-          ]
-        }
-      }
-    },
-    {
-      "name": "07 POST like поставить",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"like\": 1\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/2/like",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "2",
-            "like"
-          ]
         }
-      }
-    },
-    {
-      "name": "08 POST like отменить",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Статус опубликован\", () => pm.expect(pm.response.json().data.status).to.eql(\"published\"));"
+            ]
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"like\": 0\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/2/like",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "2",
-            "like"
-          ]
         }
-      }
+      ]
     },
     {
-      "name": "09 DELETE soft delete своей услуги",
+      "name": "06 DELETE soft delete своей услуги",
       "request": {
         "method": "DELETE",
         "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/dates/{{publishedId}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "dates",
-            "{{publishedId}}"
-          ]
+        "url": "{{baseUrl}}/api/dates/{{dateId}}",
+        "description": "Домен услуги. Только собственная карточка. Запись остаётся в БД со status=deleted; чужую удалить нельзя.",
+        "auth": {
+          "type": "noauth"
         }
-      }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
     },
     {
-      "name": "10 POST регистрация пользователя",
+      "name": "07 POST like — 0 или 1",
       "request": {
         "method": "POST",
         "header": [
@@ -251,22 +253,144 @@
             "value": "application/json"
           }
         ],
+        "url": "{{baseUrl}}/api/dates/{{likeDateId}}/like",
+        "description": "Домен услуги. От фиксированного текущего пользователя. like=1 поставить, like=0 отменить. likeDateId берётся из ленты, а не из уже удалённой собственной карточки.",
+        "auth": {
+          "type": "noauth"
+        },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"fullName\": \"Пользователь отчета\",\n  \"email\": \"report-demo@example.com\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/users/register",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "register"
-          ]
+          "raw": "{\n  \"like\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         }
-      }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Лайк установлен\", () => pm.expect(pm.response.json().data.date.isLiked).to.eql(Number(JSON.parse(pm.request.body.raw).like)));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 POST регистрация",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/register",
+        "description": "Домен пользователя. Сохранение имени и email. В ЛР3 пароль и сессия для выполнения запросов не нужны.",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Наблюдатель ЛР3\",\n  \"email\": \"{{email}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Создан или уже зарегистрирован\", () => pm.expect([201,409]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 POST аутентификация — заглушка",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/auth",
+        "description": "Домен пользователя. Заглушка для 4-й лабораторной: не проверяет пароль, не устанавливает cookie и не меняет текущего пользователя.",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Заглушка без сессии\", () => { pm.expect(pm.response.json().data.stub).to.eql(true); pm.expect(pm.response.headers.has(\"Set-Cookie\")).to.eql(false); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 POST деавторизация — заглушка",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{baseUrl}}/api/users/logout",
+        "description": "Домен пользователя. Заглушка для 4-й лабораторной. Возвращает authenticated=0, stub=true, текущий пользователь остаётся фиксированным.",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Заглушка выхода\", () => { pm.expect(pm.response.json().data.stub).to.eql(true); pm.expect(pm.response.json().data.authenticated).to.eql(0); });"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

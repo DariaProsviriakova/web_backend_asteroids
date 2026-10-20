@@ -35,7 +35,7 @@ const defaultExtension = (kind: DateMediaKind) => (kind === "image" ? ".png" : "
 const safeExtension = (file: UploadedDateMediaFile, kind: DateMediaKind) => {
   const extension = extname(file.originalname ?? "").toLowerCase();
 
-  return extension && /^[a-z0-9.]+$/.test(extension) ? extension : defaultExtension(kind);
+  return (kind === "image" ? [".png", ".jpg", ".jpeg", ".gif", ".webp"] : [".mp4", ".webm", ".mov"]).includes(extension) ? extension : defaultExtension(kind);
 };
 
 @Injectable()

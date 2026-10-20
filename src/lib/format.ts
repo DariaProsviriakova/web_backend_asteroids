@@ -40,8 +40,9 @@ export const formatTopicDate = (
   return monthName && day ? `${day} ${monthName} ${year}` : "";
 };
 
-export const parseIntegerInRange = (value: string | undefined, min: number, max: number) => {
-  const numberValue = Number(value?.trim());
+export const parseIntegerInRange = (value: unknown, min: number, max: number) => {
+  if (typeof value !== "string" || !value.trim()) return undefined;
+  const numberValue = Number(value.trim());
 
   return Number.isInteger(numberValue) && numberValue >= min && numberValue <= max
     ? numberValue

@@ -4,14 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "node --env-file-if-exists=.env node_modules/@nestjs/cli/bin/nest.js start --watch",
     "build": "nest build",
-    "infra:up": "docker compose up -d postgres adminer minio minio-setup",
+    "infra:up": "docker compose up -d postgres redis adminer minio minio-setup",
     "minio:up": "docker compose up -d minio minio-setup",
     "minio:logs": "docker compose logs -f minio minio-setup",
-    "start": "node dist/main.js",
-    "start:dev": "nest start --watch",
-    "check": "nest build"
+    "start": "node --env-file-if-exists=.env dist/main.js",
+    "start:dev": "node --env-file-if-exists=.env node_modules/@nestjs/cli/bin/nest.js start --watch",
+    "check": "nest build",
+    "test": "npm run build && node --test test/password.test.mjs",
+    "test:e2e": "npm run build && node --env-file-if-exists=.env --test test/api.e2e.mjs",
+    "redis:sessions": "docker compose exec -T redis redis-cli --eval /dev/stdin < scripts/redis-sessions.lua",
+    "start:lab3": "npm run build && node --env-file-if-exists=.env scripts/start_lab3.mjs",
+    "test:lab3": "npm run build && node --env-file-if-exists=.env --test test/lab3.e2e.mjs"
   },
   "engines": {
     "node": ">=24"
@@ -20,16 +25,29 @@
     "@nestjs/common": "^11.1.6",
     "@nestjs/core": "^11.1.6",
     "@nestjs/platform-express": "^11.1.6",
+    "@nestjs/swagger": "^11.4.7",
     "@nestjs/typeorm": "^12.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.4",
+    "connect-redis": "^9.0.0",
+    "express-session": "^1.19.0",
     "pg": "^8.23.0",
+    "redis": "^5.12.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "typeorm": "^1.1.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.10",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
     "@types/node": "^24.3.0",
     "ffmpeg-static": "^5.3.0",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "@nestjs/swagger": {
+      "js-yaml": "^5.5.0"
+    }
   }
 }

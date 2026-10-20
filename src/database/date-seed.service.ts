@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 
 import { AsteroidDate } from "../entities/asteroid-date.entity.js";
 import { ObserverDateLike } from "../entities/observer-date-like.entity.js";
+import { hashPassword } from "../auth/password.js";
 import { Observer } from "../entities/observer.entity.js";
 
 const useMinioSeedAssets = process.env.USE_MINIO_SEED_ASSETS === "true";
@@ -95,6 +96,8 @@ export class DateSeedService implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
+    if (process.env.SEED_DATA === "false") return;
+
     const observersCount = await this.observersRepository.count();
     const datesCount = await this.datesRepository.count();
 
@@ -111,6 +114,20 @@ export class DateSeedService implements OnApplicationBootstrap {
             })
           )
         );
+
+    // Credentials are opt-in, so existing LR3 accounts are never given a public password.
+    if (process.env.DEMO_PASSWORD) {
+      if (process.env.DEMO_PASSWORD.length < 8 || process.env.DEMO_PASSWORD.length > 128) {
+        throw new Error("DEMO_PASSWORD must contain 8–128 characters");
+      }
+      const demoEmail = (process.env.DEMO_EMAIL ?? "daria@example.com").trim().toLowerCase();
+      const demo = await this.observersRepository.createQueryBuilder("observer")
+        .addSelect("observer.passwordHash").where("observer.email = :email", { email: demoEmail }).getOne();
+      if (demo && !demo.passwordHash) {
+        demo.passwordHash = await hashPassword(process.env.DEMO_PASSWORD);
+        await this.observersRepository.save(demo);
+      }
+    }
 
     if (datesCount > 0) {
       const dates = await this.datesRepository.find();
@@ -140,8 +157,6 @@ export class DateSeedService implements OnApplicationBootstrap {
           await this.datesRepository.save(date);
         }
       }
-
-      await this.trimLikesToFive();
 
       return;
     }
@@ -202,17 +217,5 @@ export class DateSeedService implements OnApplicationBootstrap {
         )
       )
     );
-  }
-
-  private async trimLikesToFive() {
-    const dates = await this.datesRepository.find({ relations: { likes: true } });
-
-    for (const date of dates) {
-      const extraLikes = (date.likes ?? []).slice(5);
-
-      for (const like of extraLikes) {
-        await this.likesRepository.delete({ id: like.id });
-      }
-    }
   }
 }

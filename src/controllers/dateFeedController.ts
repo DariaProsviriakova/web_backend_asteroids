@@ -1,13 +1,17 @@
+import { ApiExcludeController } from "@nestjs/swagger";
+import { Public } from "../auth/session-auth.guard.js";
 import { Controller, Get, Header, Param, Query } from "@nestjs/common";
 
 import { formatDistance, formatTopicDate } from "../lib/format.js";
 import { fillTemplate, renderPage } from "../lib/template.js";
 import { DatesService } from "../services/dates.service.js";
 
+@ApiExcludeController()
 @Controller("dates/feed")
 export class DateFeedController {
   constructor(private readonly datesService: DatesService) {}
 
+  @Public()
   @Get(["", ":id"])
   @Header("Content-Type", "text/html; charset=utf-8")
   async renderFeed(@Param("id") idParam?: string, @Query("next") next?: string) {

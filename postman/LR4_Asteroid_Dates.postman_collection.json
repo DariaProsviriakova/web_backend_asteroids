@@ -1,0 +1,439 @@
+{
+  "info": {
+    "_postman_id": "958b1ade-7480-47f4-9ac5-fb7f99502314",
+    "name": "ЛР4 Asteroid Dates",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Ровно 10 запросов: 3 GET, 5 POST, 1 PUT, 1 DELETE. Для текущего бэкенда сначала выполните регистрацию и вход (01–02) или вставьте cookie из Swagger в sessionCookie и начните с 03. Рабочая папка Postman для файлов — корень репозитория. В единственном запросе ленты включайте/выключайте параметры id и next=true; в единственном запросе лайка меняйте like на 1 или 0. Для демонстрации гостя очистите sessionCookie и повторите тот же запрос списка/публикации, затем верните cookie. У всех запросов Disable cookie jar включён."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "email",
+      "value": "lab4-observer@example.com"
+    },
+    {
+      "key": "password",
+      "value": "AsteroidLab4!"
+    },
+    {
+      "key": "fullName",
+      "value": "Наблюдатель ЛР4"
+    },
+    {
+      "key": "designation",
+      "value": "2026 LAB4"
+    },
+    {
+      "key": "sessionCookie",
+      "value": ""
+    },
+    {
+      "key": "publishedId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Регистрация наблюдателя",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/register",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"{{fullName}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Создан или уже зарегистрирован\", () => pm.expect([201, 409]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Вход (или вставьте cookie из Swagger в sessionCookie)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/auth",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "const setCookie = pm.response.headers.get(\"Set-Cookie\");",
+              "if (setCookie) pm.collectionVariables.set(\"sessionCookie\", setCookie.split(\";\")[0]);",
+              "pm.test(\"Сессия установлена\", () => pm.expect(setCookie).to.include(\"asteroids.sid=\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 GET список услуг с фильтром",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates?maxMonth=7",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie."
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 POST черновик с картинкой и видео",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie.",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "designation",
+              "value": "{{designation}}",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": "public/assets/default-date.png"
+            },
+            {
+              "key": "video",
+              "type": "file",
+              "src": "public/assets/default-date.mp4"
+            }
+          ]
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"publishedId\", pm.response.json().data.id);",
+              "pm.test(\"Автор из сессии\", () => pm.expect(pm.response.json().data.isCreator).to.eql(1));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 GET поля собственного черновика",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates/draft",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie."
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 PUT публикация услуги",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates/publish",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"shortDescription\": \"Астероид пройдёт рядом с Землёй 18 октября.\",\n  \"approachMonth\": 10,\n  \"approachDay\": 18,\n  \"minimumDistanceAu\": 0.023\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "const data = pm.response.json().data;",
+              "pm.test(\"Статус и дата формирования обновились\", () => { pm.expect(data.status).to.eql(\"published\"); pm.expect(data.formedAt).to.be.a(\"string\"); });",
+              "pm.test(\"Поля публикации обновились\", () => { pm.expect(data.approachMonth).to.eql(10); pm.expect(data.approachDay).to.eql(18); pm.expect(data.minimumDistanceAu).to.eql(0.023); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 GET лента (без id или с id и next=true)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dates/feed",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dates",
+            "feed"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "{{publishedId}}",
+              "disabled": true
+            },
+            {
+              "key": "next",
+              "value": "true",
+              "disabled": true
+            }
+          ]
+        },
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie. Без параметров — первая карточка; включите id и next=true в Params для следующей. Это один GET-метод."
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 POST поставить или снять лайк",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates/{{publishedId}}/like",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie. Меняйте like: 1 — поставить, 0 — снять. Это один POST-метод.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"like\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 DELETE собственная услуга",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/dates/{{publishedId}}",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie."
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 POST выход",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "{{sessionCookie}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/users/logout",
+        "protocolProfileBehavior": {
+          "disableCookies": true
+        },
+        "description": "Cookie jar отключён: передаётся только явный заголовок Cookie из переменной sessionCookie."
+      },
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

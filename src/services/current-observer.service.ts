@@ -1,21 +1,22 @@
-export type CurrentObserver = {
-  id: number;
-  email: string;
-  fullName: string;
-};
+import { Inject, Injectable, Scope, UnauthorizedException } from "@nestjs/common";
+import { REQUEST } from "@nestjs/core";
+import type { Request } from "express";
 
-const CURRENT_OBSERVER: CurrentObserver = Object.freeze({
-  id: 1,
-  email: "daria@example.com",
-  fullName: "Дарья Просвиракова"
-});
+export type CurrentObserver = { id: number; email: string; fullName: string };
 
-let currentObserverSingleton: CurrentObserver | null = null;
+declare module "express-session" {
+  interface SessionData { observer?: CurrentObserver; }
+}
 
-export const getCurrentObserver = () => {
-  if (!currentObserverSingleton) {
-    currentObserverSingleton = CURRENT_OBSERVER;
+@Injectable({ scope: Scope.REQUEST })
+export class CurrentObserverService {
+  constructor(@Inject(REQUEST) private readonly request: Request) {}
+
+  get(): CurrentObserver | undefined { return this.request.session?.observer; }
+
+  require(): CurrentObserver {
+    const observer = this.get();
+    if (!observer) throw new UnauthorizedException("Authentication required");
+    return observer;
   }
-
-  return currentObserverSingleton;
-};
+}
